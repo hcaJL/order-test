@@ -89,22 +89,28 @@
     </div>
 
     <script>
-        async function fetchRestaurants() {
-            try {
-                const res = await fetch('restaurants.json'); // 直接讀取本地 JSON 檔案
-                const restaurants = await res.json();
-                const list = document.getElementById('restaurantList');
+        // 餐廳資料直接寫在 JavaScript 裡
+        const restaurants = [
+            { "id": 1, "name": "🍔 麥當勞", "url": "https://mcdonalds.com" },
+            { "id": 2, "name": "🍗 肯德基", "url": "https://www.kfcclub.com.tw/" },
+            { "id": 3, "name": "波波恰恰", "url": "https://imenu.com.tw/BoBoChaCha/BBCC/menu" },
+            { "id": 4, "name": "石二鍋(線上)", "url": "https://imenu.com.tw/BoBoChaCha/BBCC/menu" },
+            { "id": 5, "name": "#️⃣得正", "url": "https://dejeng-lm.nidin.shop/" },
+            { "id": 6, "name": "小木屋", "url": "https://shinemood-lm.nidin.shop/" },
+            { "id": 7, "name": "楽坡 BON BOX", "url": "https://shop.ichefpos.com/store/GKLWCweL/ordering" },
+            { "id": 8, "name": "給力盒子", "url": "https://imenu.com.tw/GETPOWER/branches" },
+            { "id": 9, "name": "龍角", "url": "https://dragonhorn-lm.nidin.shop/" }
+        ];
 
-                restaurants.forEach(r => {
-                    const div = document.createElement('div');
-                    div.className = 'card';
-                    div.innerHTML = `<h3>${r.name}</h3>`;
-                    div.onclick = () => window.open(r.url, '_blank');
-                    list.appendChild(div);
-                });
-            } catch (error) {
-                console.error("❌ 加載餐廳資料失敗：", error);
-            }
+        function loadRestaurants() {
+            const list = document.getElementById('restaurantList');
+            restaurants.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<h3>${r.name}</h3>`;
+                div.onclick = () => window.open(r.url, '_blank');
+                list.appendChild(div);
+            });
         }
 
         function toggleTheme() {
@@ -112,12 +118,14 @@
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
 
+        // 如果本地儲存中有主題設定，則應用
         if (localStorage.getItem('theme') === 'dark' || 
             (window.matchMedia("(prefers-color-scheme: dark)").matches && !localStorage.getItem('theme'))) {
             document.body.classList.add('dark-mode');
         }
 
-        fetchRestaurants();
+        // 載入餐廳列表
+        loadRestaurants();
     </script>
 
 </body>
