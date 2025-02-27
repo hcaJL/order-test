@@ -34,7 +34,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 固定3列 */
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
 
@@ -66,17 +66,16 @@
         .theme-toggle:hover {
             color: #007bff;
         }
-        
-        /* 響應式設計 */
+
         @media (max-width: 900px) {
             .grid {
-                grid-template-columns: repeat(2, 1fr); /* 小屏幕變2列 */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 600px) {
             .grid {
-                grid-template-columns: repeat(1, 1fr); /* 更小螢幕變1列 */
+                grid-template-columns: repeat(1, 1fr);
             }
         }
     </style>
@@ -91,17 +90,21 @@
 
     <script>
         async function fetchRestaurants() {
-            const res = await fetch('http://localhost:3000/api/restaurants');
-            const restaurants = await res.json();
-            const list = document.getElementById('restaurantList');
+            try {
+                const res = await fetch('restaurants.json'); // 直接讀取本地 JSON 檔案
+                const restaurants = await res.json();
+                const list = document.getElementById('restaurantList');
 
-            restaurants.forEach(r => {
-                const div = document.createElement('div');
-                div.className = 'card';
-                div.innerHTML = `<h3>${r.name}</h3>`;
-                div.onclick = () => window.open(r.url, '_blank');
-                list.appendChild(div);
-            });
+                restaurants.forEach(r => {
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `<h3>${r.name}</h3>`;
+                    div.onclick = () => window.open(r.url, '_blank');
+                    list.appendChild(div);
+                });
+            } catch (error) {
+                console.error("❌ 加載餐廳資料失敗：", error);
+            }
         }
 
         function toggleTheme() {
@@ -109,8 +112,8 @@
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
 
-        // 加载时应用用户的主题偏好
-        if (localStorage.getItem('theme') === 'dark' || (window.matchMedia("(prefers-color-scheme: dark)").matches && !localStorage.getItem('theme'))) {
+        if (localStorage.getItem('theme') === 'dark' || 
+            (window.matchMedia("(prefers-color-scheme: dark)").matches && !localStorage.getItem('theme'))) {
             document.body.classList.add('dark-mode');
         }
 
