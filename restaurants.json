@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "name": "🍔 麥當勞",
+        "url": "https://mcdonalds.com"
+    },
+    {
+        "id": 2,
+        "name": "🍗 肯德基",
+        "url": "https://www.kfcclub.com.tw/"
+    },
+    {
+        "id": 3,
+        "name": "波波恰恰",
+        "url": "https://imenu.com.tw/BoBoChaCha/BBCC/menu"
+    },
+    {
+        "id": 4,
+        "name": "石二鍋(線上)",
+        "url": "https://imenu.com.tw/BoBoChaCha/BBCC/menu"
+    },
+    {
+        "id": 5,
+        "name": "#️⃣得正",
+        "url": "https://dejeng-lm.nidin.shop/"
+    },
+    {
+        "id": 6,
+        "name": "小木屋",
+        "url": "https://shinemood-lm.nidin.shop/"
+    },
+    {
+        "id": 7,
+        "name": "楽坡 BON BOX",
+        "url": "https://shop.ichefpos.com/store/GKLWCweL/ordering"
+    },
+    {
+        "id": 8,
+        "name": "給力盒子",
+        "url": "https://imenu.com.tw/GETPOWER/branches"
+    },
+    {
+        "id": 9,
+        "name": "龍角",
+        "url": "https://dragonhorn-lm.nidin.shop/"
+    }
+]
