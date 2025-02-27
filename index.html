@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳列表</title>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --card-bg: #fff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #181818;
+            --text-color: #f5f5f5;
+            --card-bg: #252525;
+            --card-shadow: rgba(12, 2, 41, 0.051);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 固定3列 */
+            gap: 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px var(--card-shadow);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px var(--card-shadow);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 10px;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            color: #007bff;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr); /* 小屏幕變2列 */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(1, 1fr); /* 更小螢幕變1列 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleTheme()">🌙 切換主題</button>
+        <h1>餐廳列表</h1>
+        <div class="grid" id="restaurantList"></div>
+    </div>
+
+    <script>
+        async function fetchRestaurants() {
+            const res = await fetch('http://localhost:3000/api/restaurants');
+            const restaurants = await res.json();
+            const list = document.getElementById('restaurantList');
+
+            restaurants.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<h3>${r.name}</h3>`;
+                div.onclick = () => window.open(r.url, '_blank');
+                list.appendChild(div);
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // 加载时应用用户的主题偏好
+        if (localStorage.getItem('theme') === 'dark' || (window.matchMedia("(prefers-color-scheme: dark)").matches && !localStorage.getItem('theme'))) {
+            document.body.classList.add('dark-mode');
+        }
+
+        fetchRestaurants();
+    </script>
+
+</body>
+</html>
